@@ -1,0 +1,142 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+
+            <!-- Post Content Column -->
+            <div class="col-lg-8">
+
+                <!-- Title -->
+                <h1 class="mt-4">Vos Information personelles</h1>
+
+                <hr>
+
+                <p class="lead">
+                    Nom:
+                    <a href="#">{{ app.user.nom }}</a>
+                </p>
+                <p class="lead">
+                    Prénom:
+                    <a href="#">{{ app.user.prenom }}</a>
+                </p>
+                <p class="lead">
+                    Adresse mail:
+                    <a href="#">{{ app.user.email }}</a>
+                </p>
+                <p class="lead">
+                    Compte crée le
+                    <a href="#">{{ app.user.createdat|date("d/m/y") }}</a>
+                    à
+                    <a href="#">{{ app.user.createdat|date('H:i') }}</a>
+                </p>
+
+                <hr>
+
+                <!-- Title -->
+                <h1 class="mt-4">Mes articles</h1>
+
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th class="sorting" scope="col">#</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Prix</th>
+                    </tr>
+                    </thead>
+                    {% for article in articles %}
+                        {% if article.etat == 0 %}
+                        <tbody>
+                        <tr>
+                            <th scope="row">{{ article.id }}</th>
+                            <td><img src="{{ asset('uploads/') ~ article.image}}" alt="card-img-top" style="width: 100px;height: 100px;"></td>
+                            <td>{{ article.name }}</td>
+                            <td style="white-space: nowrap;">{{ article.description }}</td>
+                            <td>{{ article.price }}</td>
+                        </tr>
+                        </tbody>
+                        {% endif %}
+                    {% endfor %}
+                </table>
+
+                <hr>
+
+                <h1 class="mt-4">Historique d'achat</h1>
+
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th class="sorting" scope="col">Nom</th>
+                        <th scope="col">Date d'achat</th>
+                        <th scope="col">Quantité</th>
+                        <th scope="col">Prix</th>
+                    </tr>
+                    </thead>
+                    {% for facture in factures %}
+                            <tbody>
+                            <tr>
+                                <th scope="row">{{ facture.commande.reference|join }}</th>
+                                <td>{{ facture.date|join|date('d/m/y') }}</td>
+                                <td>{{ facture.commande.quantite|join }}</td>
+                                <td>{{ facture.commande.prixHT|join }}</td>
+                            </tr>
+                            </tbody>
+                    {% endfor %}
+                </table>
+
+                <div class="pagination">
+                    {{ knp_pagination_render(articles) }}
+                </div>
+
+                <!-- /.row -->
+
+            </div>
+
+            <!-- Sidebar Widgets Column -->
+            <div class="col-md-4">
+
+                <!-- Categories Widget -->
+                <div class="card my-4">
+                    <h5 class="card-header">Votre solde</h5>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="input-group">
+                                        <p class="blockquote">Jetons: {{ app.user.solde }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h5 class="card-header">Recharger votre compte</h5>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="input-group">
+                                        {{ form_start(form) }}
+                                        {{ form_widget(form.solde, {'attr': {'class': 'form-control'}}) }}
+                                        <label for="form_solde"></label>
+                                        {{ form_rest(form) }}
+                                        <button class="btn btn-outline-success btn-block text-uppercase" type="submit">Valider</button>
+                                        {{ form_end(form) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+{% endblock %}

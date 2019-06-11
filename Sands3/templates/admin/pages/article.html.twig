@@ -1,0 +1,146 @@
+{% extends 'admin/index.html.twig' %}
+
+{% block body %}
+
+    {% for message in app.flashes('notice') %}
+        <div class="flash-notice">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <div class="container mt-4">
+
+        <!-- Content Row -->
+        <div class="row">
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Nombre Utilisateur</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    {% set count = 0 %}
+                                    {% for article_idCreator in articles %}
+                                        {% set count = count + 1 %}
+                                    {% endfor %}
+
+                                    {{ count }}
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Jetons (Actif)</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    600
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Nombre Article</div>
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col-auto">
+                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                                            {% set count = 0 %}
+                                            {% for article_id in articles %}
+                                                {% set count = count + 1 %}
+                                            {% endfor %}
+
+                                            {{ count }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pending Requests Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-warning shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Commentaire</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-comments fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Row -->
+
+
+        <a href="{{ path('newArticle') }}"><button type="button" class="btn btn-outline-secondary mb-2 float-right">Ajouter</button></a>
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th class="sorting" scope="col">#</th>
+                <th scope="col">Image</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Description</th>
+                <th scope="col">Prix</th>
+                <th scope="col">Ajouté le</th>
+                <th scope="col">A</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            {% for article in articles %}
+            <tbody>
+            <tr>
+                <th scope="row">{{ article.id }}</th>
+                <td><img src="{{ asset('uploads/') ~ article.image}}" alt="card-img-top" style="width: 100px;height: 100px;"></td>
+                <td>{{ article.name }}</td>
+                <td style="white-space: nowrap;">{{ article.description }}</td>
+                <td>{{ article.price }}</td>
+                <td>{{ article.createdat|date("d/m/y") }}</td>
+                <td>{{ article.createdat|date('H:i') }}</td>
+                <td>
+                    <a href="{{ path('delete_article', { 'id' : article.id}) }}"><i class="fas fa-trash"></i></a>
+                    <a href="{{ path('edit_article', { 'id' : article.id}) }}"><i class="fas fa-edit"></i></a>
+                </td>
+            </tr>
+            </tbody>
+            {% endfor %}
+        </table>
+
+        <div class="pagination">
+            {{ knp_pagination_render(articles) }}
+        </div>
+    </div>
+{% endblock %}

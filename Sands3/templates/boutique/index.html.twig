@@ -1,0 +1,119 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<!-- Page Content -->
+<div class="container">
+
+    <div class="row">
+
+        <!-- Post Content Column -->
+        <div class="col-lg-8">
+
+            <!-- Page Features -->
+            <div class="row text-center mt-4">
+
+                {% for article in articles %}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100">
+                        <img class="card-img-top" src="{{ asset('uploads/') ~ article.image}}" style="height: 160px;">
+                        <div class="card-body">
+                            <h4 class="card-title" style="white-space: nowrap;">{{ article.name }}</h4>
+                            <p class="card-text">{{ article.description }}</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="{{ path("show_article", { "id" : article.id}) }}" class="btn btn-primary mr-1">En savoir plus</a><a href="#" class="btn btn-outline-secondary">{{ article.price }}</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+
+            <div class="pagination">
+                {{ knp_pagination_render(articles) }}
+            </div>
+            <!-- /.row -->
+
+        </div>
+
+        <!-- Sidebar Widgets Column -->
+        <div class="col-md-4">
+
+            <!-- Categories Widget -->
+            <div class="card my-4">
+                <h5 class="card-header">Categories</h5>
+                <div class="card-body">
+                    <div class="input-group">
+                        <div class="form-group">
+                            <div class="form-row">
+                                <ul class="list-unstyled mb-0">
+                                    <li>
+                                        <a href="{{path('boutique.index')}}">
+                                            <button type="button" class="btn btn-outline-info m-1">Tout</button>
+                                        </a>
+                                    </li>
+                                </ul>
+                                {% for category in categories %}
+                                    <ul class="list-unstyled mb-0">
+                                        <li>
+                                            <a href="{{path('filter', { "category" : category.id} )}}">
+                                                <button type="button" class="btn btn-outline-info m-1">{{ category.name }}</button>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recherche Widget -->
+            <div class="card my-4">
+                <h5 class="card-header">Recherche</h5>
+                <div class="card-body">
+                    <div class="input-group">
+                        <div class="form-group">
+                            <div class="form-row">
+                                {{ form_start(form) }}
+                                <div class="form-group">
+                                    <div class="form-row">
+                                        <div class="col-md-6">
+                                            <div class="form-label-group">
+                                                {{ form_widget(form.prixMin, {'attr': {'class': 'form-control'}}) }}
+                                                <label for="prixMin">Prix minimum</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-label-group">
+                                                {{ form_widget(form.prixMax, {'attr': {'class': 'form-control'}}) }}
+                                                <label for="prixMax">Prix maximum</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{ form_rest(form) }}
+                                <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Go!</button>
+                                {{ form_end(form) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Side Widget -->
+            <div class="card my-4">
+                <h5 class="card-header">Point infos</h5>
+                <div class="card-body">
+                    Retrouvez dans cet onglet l'ensemble des articles mis en vente par SandS, un grand choix de produit vous est proposé à des prix compétitifs!
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <!-- /.row -->
+
+</div>
+<!-- /.container -->
+{% endblock %}

@@ -1,0 +1,108 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+
+            <!-- Post Content Column -->
+            <div class="col-lg-8">
+
+                <!-- Title -->
+                <h1 class="mt-4">{{ article.name }}</h1>
+
+                <!-- Author -->
+                <p class="lead">
+                    by
+                    <a href="#">SandS</a>
+                </p>
+
+                <hr>
+
+                <!-- Date/Time -->
+                <p>Ajouté le {{ article.createdat|date("d/m/y") }}, à {{ article.createdat|date('H:i') }}</p>
+
+                <hr>
+
+                <!-- Preview Image -->
+                <img class="img-fluid rounded" src="{{ asset('uploads/') ~ article.image}}" alt="" style="height: 60vh;max-height: 400px;">
+
+                <hr>
+
+                <!-- Post Content -->
+                <p class="lead">{{ article.description }}</p>
+
+                <!-- Comments Form -->
+                <div class="card my-4">
+                    <h5 class="card-header">Laisser un commentaire:</h5>
+                    <div class="card-body">
+                        <form>
+                            <div class="form-group">
+                                <textarea class="form-control" rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Soumettre</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Single Comment -->
+                <div class="media mb-4">
+                    <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                    <div class="media-body">
+                        <h5 class="mt-0">Jean-Baptiste Poul</h5>
+                        Cette PS4 Pro est géniale, je peux jouer aux tout derniers jeux avec mes amis!
+                    </div>
+                </div>
+
+                <!-- Comment with nested comments -->
+                <div class="media mb-4">
+                    <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                    <div class="media-body">
+                        <h5 class="mt-0">Commenter Name</h5>
+                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+
+                        <div class="media mt-4">
+                            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                            <div class="media-body">
+                                <h5 class="mt-0">Commenter Name</h5>
+                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                            </div>
+                        </div>
+
+                        <div class="media mt-4">
+                            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                            <div class="media-body">
+                                <h5 class="mt-0">Commenter Name</h5>
+                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        <div class="col-md-4">
+
+            <!-- Categories Widget -->
+            <div class="card my-4">
+                <h5 class="card-header">Acheter l'article</h5>
+                <div class="card-body">
+                    <div class="input-group">
+                        <p class="blockquote">Prix: {{ article.price }}</p>
+                    </div>
+                    <div class="input-group text-center">
+                        <form action="{{ path('ajouter', { 'id' : article.id}) }}" method="get">
+                            <select name="qte" class="form-control">
+                                {% for i in 1..5 %}
+                                    <option value="{{ i }}">{{ i }}</option>
+                                {% endfor %}
+                            </select>
+                        <button type="submit" class="btn btn-outline-success">Ajouter au pannier</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+{% endblock %}

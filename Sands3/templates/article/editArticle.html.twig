@@ -1,0 +1,45 @@
+{% extends 'admin/index.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="card card-register mx-auto mt-5">
+            <div class="card-header">Ajouter un article à la boutique</div>
+            <div class="card-body">
+                {{ form_start(form) }}
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-8">
+                            <div class="form-label-group">
+                                {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+                                <label for="article_name">Nom de l'article</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-label-group">
+                                {{ form_widget(form.price, {'attr': {'class': 'form-control'}}) }}
+                                <label for="article_price">Prix</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-label-group">
+                        {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="form-label-group">
+                                {{ form_widget(form.category, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{ form_rest(form) }}
+                <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Enregistrer</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% set TotalHT = 0 %}
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+
+            <!-- Post Content Column -->
+            <div class="col-lg-4">
+
+                <!-- Title -->
+                <h3 class="mt-4">Adresse de livraison</h3>
+
+                                {{ livraison.adresse }}, {{ livraison.codepostal }} {{ livraison.ville }} - {{ livraison.complement }}
+
+                <hr>
+
+                <!-- /.row -->
+
+            </div>
+
+            <!-- Sidebar Widgets Column -->
+            <div class="col-md-8">
+                <table class="table table-bordered mt-4">
+                    <thead>
+                    <tr>
+                        <th class="sorting" scope="col">#</th>
+                        <th scope="col">Référence</th>
+                        <th scope="col">Quantité</th>
+                        <th scope="col">Prix unitaire</th>
+                        <th scope="col">Total HT</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for article in articles %}
+                        <tr>
+                                <th scope="row">{{ article.id }}</th>
+                                <td>{{ article.name }}</td>
+                                <td>
+                                    {{ panier[article.id] }}
+                                </td>
+                                <td>{{ article.price }}</td>
+                                <td>{{ article.price * panier[article.id] }}</td>
+                        </tr>
+                        {% set TotalHT = TotalHT + (article.price * panier[article.id]) %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <a href="{{ path('achat') }}">
+                    <button type="button" class="btn btn-outline-success float-right">Achat</button>
+                </a>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+
+            <!-- Post Content Column -->
+            <div class="col-lg-4">
+
+                <!-- Title -->
+                <h3 class="mt-4">Vos adresses de livraison</h3>
+
+                {% if user.livraisons|length != 0 %}
+                <form action="{{ path('validation') }}" method="post">
+                    <h4>Adresse de livraison</h4>
+                    {% for livraison in user.livraisons %}
+                        <label class="radio">
+                            <input type="radio" name="livraison" id="OptionsRadios1" value="{{ livraison.id }}" {% if loop.index0 == 0 %} checked="checked" {% endif %}>
+                            {{ livraison.adresse }}, {{ livraison.codepostal }} {{ livraison.ville }} - {{ livraison.complement }}
+                            <a href="{{ path('delete_livraison', { 'id' : livraison.id}) }}"><i class="fas fa-trash"></i></a>
+                        </label>
+                    {% endfor %}
+                    <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Valider mon adresse de livraison</button>
+                </form>
+                {% endif %}
+
+                <hr>
+
+                <!-- /.row -->
+
+            </div>
+
+            <!-- Sidebar Widgets Column -->
+            <div class="col-md-8">
+                <div class="card-body">
+                {{ form_start(form) }}
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="form-label-group">
+                                {{ form_widget(form.adresse, {'attr': {'class': 'form-control'}}) }}
+                                <label for="livraison_adresse">Adresse</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="form-label-group">
+                                {{ form_widget(form.codepostal, {'attr': {'class': 'form-control'}}) }}
+                                <label for="livraison_codepostal">Code Postal</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="form-label-group">
+                                {{ form_widget(form.ville, {'attr': {'class': 'form-control'}}) }}
+                                <label for="livraison_ville">Ville</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="form-label-group">
+                                {{ form_widget(form.tel, {'attr': {'class': 'form-control'}}) }}
+                                <label for="livraison_tel">Téléphone</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="form-label-group">
+                                {{ form_widget(form.complement, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{ form_rest(form) }}
+                <button class="btn btn-lg btn-primary btn-block text-uppercase col-md-6 " type="submit">Enregistrer</button>
+                {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+
+        </div>
+        <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+{% endblock %}

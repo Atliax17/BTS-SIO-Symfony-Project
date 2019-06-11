@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('assets/css/register.css') }}">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">    {% endblock %}
+</head>
+<body>
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 col-xl-9 mx-auto">
+                <div class="card card-signin flex-row my-5">
+                    <div class="card-img-left d-none d-md-flex">
+                        <!-- Background image for card set in CSS! -->
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Nous rejoindre</h5>
+                        {{ form_start(form) }}
+                            <div class="form-label-group">
+                                {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+                                <label for="user_nom">Nom</label>
+                            </div>
+
+                            <div class="form-label-group">
+                                {{ form_widget(form.prenom, {'attr': {'class': 'form-control'}}) }}
+                                <label for="user_prenom">Prènom</label>
+                            </div>
+
+                            <div class="form-label-group">
+                                {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                                <label for="user_email">Adresse mail</label>
+                            </div>
+
+                            <hr>
+
+                            <div class="form-label-group">
+                                {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
+                                <label for="user_plainPassword_first">Mot de passe</label>
+                            </div>
+
+                            <div class="form-label-group">
+                                {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
+                                <label for="user_plainPassword_second">Confirmer mot de passe</label>
+                            </div>
+
+                        {{ form_rest(form) }}
+                        <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">S'inscrire</button>
+                        {{ form_end(form) }}
+                            <a class="d-block text-center mt-2 small" href="#">Se connecter</a>
+                            <hr class="my-4">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}{% endblock %}
+</body>
+</html>

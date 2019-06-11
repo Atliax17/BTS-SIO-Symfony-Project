@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {% set TotalHT = 0 %}
+
+    <div class="container mt-4">
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th class="sorting" scope="col">#</th>
+                <th scope="col">Référence</th>
+                <th scope="col">Quantité</th>
+                <th scope="col">Prix unitaire</th>
+                <th scope="col">Total HT</th>
+            </tr>
+            </thead>
+                <tbody>
+                {% if articles|length == 0 %}
+                    <tr>
+                        <td colspan="5"><center>Aucun articles dans votre panier</center></td>
+                    </tr>
+                {% endif %}
+
+                {% for article in articles %}
+                <tr>
+                    <form action="{{ path('ajouter', { 'id' : article.id}) }}" method="get">
+                    <th scope="row">{{ article.id }}</th>
+                    <td>{{ article.name }}</td>
+                    <td>
+                        <select name="qte" class="form-control" onChange="this.form.submit()" style="display: inline-block;width: auto;">
+                            {% for i in 1..5 %}
+                                <option value="{{ i }}" {% if i == panier[article.id] %} selected="selected" {% endif %}>{{ i }}</option>
+                            {% endfor %}
+                        </select>&nbsp;
+                        <a href="{{ path('supprimer', { 'id' : article.id}) }}"><i class="fas fa-trash"></i></a>
+                    </td>
+                    <td>{{ article.price }}</td>
+                    <td>{{ article.price * panier[article.id] }}</td>
+                    </form>
+                </tr>
+                    {% set TotalHT = TotalHT + (article.price * panier[article.id]) %}
+                {% endfor %}
+                </tbody>
+        </table>
+
+
+        <p class="blockquote float-right">PrixHT: {{ TotalHT }}</p><br><br>
+        {% if articles|length == 0 %}
+            {% else %}
+            {% if app.user.solde >= TotalHT %}
+            <a href="{{ path('livraison') }}">
+                <button type="button" class="btn btn-outline-success float-right">Valider la commande</button>
+            </a>
+            {% else %}
+                <button type="button" class="btn btn-outline-danger float-right">Solde insuffisant</button>
+            {% endif %}
+        {% endif %}
+        {% for article in articles %}
+        {% if app.user.solde >= TotalHT %}
+            <a href="{{ path('buy_article', { "id" : article.id} ) }}">
+                <button type="button" class="btn btn-outline-success float-right">Valider la commande</button>
+            </a>
+        {% else %}
+            <button type="button" class="btn btn-outline-danger float-right">Solde insuffisant</button>
+        {% endif %}
+        {% endfor %}
+
+    </div>
+{% endblock %}
